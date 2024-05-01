@@ -1,0 +1,20 @@
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include "share/header_ref.html" %}
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    <header class="section-header">
+        {% render_partial "home.views.header_components" %}
+    </header>
+    {% block content %} {% endblock %}
+
+<footer class="section-footer border-top">
+    {% render_partial "home.views.footer_components" %}
+</footer>
+</body>
+</html>

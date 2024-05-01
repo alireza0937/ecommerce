@@ -1,0 +1,24 @@
+services:
+  web:
+    build: 
+      context: ./
+    container_name: django
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=postgresql
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:alpine3.19
+    container_name: postgresql
+    environment:
+      POSTGRES_PASSWORD: 1377 
+      POSTGRES_DB: ecommerce
+      TZ: 'Asia/Tehran'
+    volumes:
+      - /custom/mount:/var/lib/postgresql/data
