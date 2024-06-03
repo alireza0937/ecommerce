@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-3wh73i%bct18#u4l4(8bjh2ezj1qtnwh_)y3s87zc727+b8g2u
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.5", "localhost"]
 
 
 INSTALLED_APPS = [
@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "django_render_partial",
     "category",
     "store",
+    "carts",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.context_processors.all_categories',
+                'carts.context_processors.show_amount_of_items_in_basket',
             ],
         },
     },

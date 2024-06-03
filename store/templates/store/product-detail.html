@@ -24,6 +24,15 @@
             </aside>
             <main class="col-md-6 border-left">
     <article class="content-body">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <h5 class="message">{{ message }}</h5>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
     
     <h2 class="title">{{ product.name }}</h2>
     
@@ -35,21 +44,25 @@
     
     
     <hr>
+
+    <form id="myForm" action="{% url 'add-to-basket' %}" method="post">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        {% csrf_token %}
         <div class="row">
             <div class="item-option-select">
                 <h6>Choose Color</h6>
                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Silver
+                    <input type="radio" name="color" value="silver"> Silver
                   </label>
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Gray
+                    <input type="radio" name="color" value="gray"> Gray
                   </label>
                   <label class="btn btn-light active">
-                    <input type="radio" name="radio_color checked"> Gold
+                    <input type="radio" name="color" checked="" value="gold"> Gold
                   </label>
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> Black
+                    <input type="radio" name="color" value="balck"> Black
                   </label>
                 </div> 
             </div>
@@ -59,26 +72,29 @@
                 <h6>Select Size</h6>
                 <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> S
+                    <input type="radio" name="size" value="s"> S
                   </label>
                   <label class="btn btn-light active">
-                    <input type="radio" name="radio_color" checked=""> M
+                    <input type="radio" name="size" checked="" value="m"> M
                   </label>
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> L
+                    <input type="radio" name="size" value="l"> L
                   </label>
                   <label class="btn btn-light">
-                    <input type="radio" name="radio_color"> XL
+                    <input type="radio" name="size" value="xl"> XL
                   </label>
                 </div> 
             </div>
         </div> <!-- row.// -->
         <hr>
         {% if product.stock > 0 %}
-            <a href="" class="btn  btn-primary"> 
-                <span class="text">Add to cart</span> 
-                <i class="fas fa-shopping-cart"></i>
-            </a>
+            {% if request.user.is_authenticated %}
+            <button type="submit" class="btn btn-primary">Add to cart  <i class="fas fa-shopping-cart"></i></button>
+        </form>
+            {% else %}
+                <p>You should <a href="">log in</a> to add products to the basket.</p>
+            {% endif %}
+
         {% else %}
             <h5 class='text-danger'>Out of stock</h5>
         {% endif %}
