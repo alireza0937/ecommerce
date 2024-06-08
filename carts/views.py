@@ -14,7 +14,7 @@ def cart(request):
         order_total_price = select_user_order_main_basket.calculate_total_price()
         tax = (0.02 * float(order_total_price))
         price_with_tax = float(order_total_price) + tax
-    except:
+    except Exception:
         order_total_price = None
         tax = None
         price_with_tax = None
